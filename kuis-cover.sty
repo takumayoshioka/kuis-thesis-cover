@@ -122,9 +122,13 @@
  \fi}
 
 \ifDS@en
+% \def\MKT@BACHELORTHESIS{Senior Thesis}
+\def\MKT@BACHELORTHESIS{Graduation Thesis}
 \def\MKT@MASTERTHESIS{Master's Thesis}
 \def\MKT@SUPERVISOR{Supervisor}
+\def\MKT@BACHELORSCHOOL{School of Informatics and Mathematical Science\\Faculty of Engineering\\Kyoto University}
 \def\MKT@MASTERSCHOOL{Graduate School of Informatics, Kyoto University}
+\def\MKT@BACHELORDEPARTMENT{Course Program of {\@DEPARTMENT}}
 \def\MKT@MASTERDEPARTMENT{Department of {\@DEPARTMENT}, Master's Program}
 \else
 \def\MKT@BACHELORTHESIS{特別研究報告書}
@@ -140,45 +144,49 @@
 
 \def\MKT@THESIS{\ifDS@master{\MKT@MASTERTHESIS}\else{\MKT@BACHELORTHESIS}\fi}
 \def\MKT@DEPARTMENT{%
-\ifDS@master{\MKT@MASTERSCHOOL}\else{\MKT@BACHELORSCHOOL}\fi \\%
-\ifDS@master{\MKT@MASTERDEPARTMENT}\else{\MKT@BACHELORDEPARTMENT}\fi}
+\ifDS@en{
+  \ifDS@master{\MKT@MASTERDEPARTMENT}\else{\MKT@BACHELORDEPARTMENT}\fi \\
+  \ifDS@master{\MKT@MASTERSCHOOL}\else{\MKT@BACHELORSCHOOL}\fi
+}
+\else{
+  \ifDS@master{\MKT@MASTERSCHOOL}\else{\MKT@BACHELORSCHOOL}\fi \\%
+  \ifDS@master{\MKT@MASTERDEPARTMENT}\else{\MKT@BACHELORDEPARTMENT}\fi
+}
+\fi
+}
 \def\MKT@GRADUATE{\ifDS@master{\MKT@MASTERGRADUATE}\else{\MKT@BACHELORGRADUATE}\fi}
 
 \def\MAKETITLE{{%
  \def\CL##1{\centerline{##1\strut}}%
- \def\\{\cr}%
+%  \def\\{\cr}%
  \fboxsep=0pt\relax
  \def\avheight{21cm}%
  \def\avwidth{14.85cm}%
  \fbox{%
   \hsize=\avwidth \parindent=0pt \tabskip=0pt
   \vbox to 21cm{%
+  \centering
    \vskip1cm
-   \CL{\Large\bf \MKT@THESIS}%
+   {\Large\bf\MKT@THESIS}%
    \vskip2cm
-   \CL{\LARGE\bf
-    \vbox{\halign{\hfil ##\hfil\cr%
-     \@TITLE\crcr
-    }}%
-   }%
+   {\LARGE\bf{\@TITLE}\par}%
    \vskip1cm
-   \CL{\large \MKT@SUPERVISOR\quad \@SUPERVISOR}%
+   {\large\MKT@SUPERVISOR\quad\@SUPERVISOR}%
    \vfill\vfill\vfill
-   \CL{\large
-    \vbox{\halign{\hfil ##\hfil\cr%
-     \MKT@DEPARTMENT\crcr}}}%
+   {\large\MKT@DEPARTMENT}
    \vskip.5cm
-   \CL{\large
-    \vbox{\halign{\hfil ##\hfil\cr%
-     \ifDS@en
-     \monthname[\@ENTRANCEMONTH] {\@ENTRANCEYEAR} of Entry\cr
-     \monthname[\@COMPLETIONMONTH] {\@COMPLETIONYEAR} of Completion\cr%
-     \else
-     {\@ENTRANCEERA}{\@ENTRANCEYEAR}年{\@ENTRANCEMONTH}月入学\cr
-     {\@COMPLETIONERA}{\@COMPLETIONYEAR}年{\@COMPLETIONMONTH}月\MKT@GRADUATE\cr%
-     \fi}}}%
+   {
+    \large
+    \ifDS@en
+     \monthname[\@ENTRANCEMONTH] {\@ENTRANCEYEAR} of Entry\\
+     \monthname[\@COMPLETIONMONTH] {\@COMPLETIONYEAR} of Completion\\%
+    \else
+     {\@ENTRANCEERA}{\@ENTRANCEYEAR}年{\@ENTRANCEMONTH}月入学\\
+     {\@COMPLETIONERA}{\@COMPLETIONYEAR}年{\@COMPLETIONMONTH}月\MKT@GRADUATE\\%
+    \fi
+   }
    \vskip2cm
-   \CL{\Large \@AUTHOR}%
+   {\Large\@AUTHOR}%
    \vskip2cm
   }%
 }}}
